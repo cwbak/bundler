@@ -78,7 +78,7 @@ describe('SimpleAccount', function () {
 
         const receipt = await ret.wait()
         console.log("txHash: %s", receipt.transactionHash)
-        console.log("Logs: %o", receipt.logs)
+        // console.log("Logs: %o", receipt.logs)
 
         expect(true).to.be.true
     })

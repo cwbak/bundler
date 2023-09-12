@@ -25,6 +25,8 @@ export class ERC4337EthersSigner extends Signer {
 
     // This one is called by Contract. It signs the request and passes in to Provider to be sent.
     async sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
+        console.log("::: ERC4337EthersSigner sendTransaction")
+
         const tx: TransactionRequest = await this.populateTransaction(transaction)
         await this.verifyAllNecessaryFields(tx)
         const userOperation = await this.smartAccountAPI.createSignedUserOp({
@@ -35,6 +37,8 @@ export class ERC4337EthersSigner extends Signer {
         })
         const transactionResponse = await this.erc4337provider.constructUserOpTransactionResponse(userOperation)
         try {
+            console.log("send user operation to bundler")
+
             await this.httpRpcClient.sendUserOpToBundler(userOperation)
         } catch (error: any) {
             // console.error('sendUserOpToBundler failed', error)
