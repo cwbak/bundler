@@ -12,6 +12,7 @@ import { expect } from 'chai'
 import { parseEther } from "ethers/lib/utils";
 import { ethers as hardhat_ethers } from "hardhat";
 import { BigNumberish, Signer, Wallet } from "ethers";
+import { GetBalance } from "../src/balance";
 
 
 const ENTRY_POINT_ADDRESS = "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
@@ -63,11 +64,17 @@ describe('SimpleAccount', function () {
     }
 
     it('Send ETH', async function () {
+        const eoaSigner = (await hardhat_ethers.getSigners())[0].address
         const aaSigner = new Wallet(SmartWalletOwnerPK)
         const aaProvider = await wrapProvider(hardhat_ethers.provider, config, aaSigner)
 
         const accountAddress = await aaProvider.getSigner().getAddress()
         console.log("accountAddress: %s", accountAddress)
+
+        console.log("Balances Before")
+        console.log(await GetBalance(hardhat_ethers.provider, "EOA signer", eoaSigner))
+        console.log(await GetBalance(hardhat_ethers.provider, "AA signer", aaSigner.address))
+        console.log(await GetBalance(hardhat_ethers.provider, "Account Address", accountAddress))
 
         const ret = await aaProvider.getSigner().sendTransaction({
             from: accountAddress,
@@ -79,6 +86,11 @@ describe('SimpleAccount', function () {
         const receipt = await ret.wait()
         console.log("txHash: %s", receipt.transactionHash)
         // console.log("Logs: %o", receipt.logs)
+
+        console.log("Balances After")
+        console.log(await GetBalance(hardhat_ethers.provider, "EOA signer", eoaSigner))
+        console.log(await GetBalance(hardhat_ethers.provider, "AA signer", aaSigner.address))
+        console.log(await GetBalance(hardhat_ethers.provider, "Account Address", accountAddress))
 
         expect(true).to.be.true
     })
