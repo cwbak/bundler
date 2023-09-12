@@ -4,10 +4,9 @@ import { EntryPoint__factory, SimpleAccountFactory__factory } from "@account-abs
 import {
     ClientConfig,
     DeterministicDeployer,
-    ERC4337EthersProvider,
-    HttpRpcClient,
+    ERC4337EthersProvider, HttpRpcClient,
     SimpleAccountAPI
-} from "@account-abstraction/sdk";
+} from "@account-abstraction/sdk/src";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { expect } from 'chai'
 import { parseEther } from "ethers/lib/utils";
