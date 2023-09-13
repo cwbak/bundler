@@ -13,31 +13,31 @@ import { parseEther } from "ethers/lib/utils";
 import { ethers as hardhat_ethers } from "hardhat";
 import { BigNumberish, Signer, Wallet } from "ethers";
 import { GetBalance } from "../src/balance";
+import { ENTRY_POINT_ADDRESS, SmartWalletOwnerPK } from "./__common__";
 
 
-const ENTRY_POINT_ADDRESS = "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
 const BundlerURL = "http://127.0.0.1:3000/rpc" //https://eth-sepolia.g.alchemy.com/v2/HScPYdzA0rnkjVlhirpV-0Bsh3SlUkvX"
-const SmartWalletOwnerPK = "8b04454a45bed4031edcea52aaa33b2b02365e728c2ed73694eda5d3a142ebb8"
+const SmartAccountIndex = 0
 
 export async function wrapProvider(
     originalProvider: JsonRpcProvider,
     config: ClientConfig,
     originalSigner: Signer = originalProvider.getSigner(),
-    index?: BigNumberish,
+    index: BigNumberish = SmartAccountIndex,
 ): Promise<ERC4337EthersProvider> {
     const entryPoint = EntryPoint__factory.connect(config.entryPointAddress, originalProvider)
     // Initial SimpleAccount instance is not deployed and exists just for the interface
     const detDeployer = new DeterministicDeployer(originalProvider)
 
     // salt 는 SimpleAccountFactory 의 salt
-    const SimpleAccountFactory = await detDeployer.deterministicDeploy(new SimpleAccountFactory__factory(), 0, [entryPoint.address])
+    const simpleAccountFactoryAddress = await detDeployer.deterministicDeploy(new SimpleAccountFactory__factory(), 0, [entryPoint.address])
 
     // index 는 SimpleAccount 의 salt 로 사용된다.
     const smartAccountAPI = new SimpleAccountAPI({
         provider: originalProvider,
         entryPointAddress: entryPoint.address,
         owner: originalSigner,
-        factoryAddress: SimpleAccountFactory,
+        factoryAddress: simpleAccountFactoryAddress,
         paymasterAPI: config.paymasterAPI,
         index: index,
     })
@@ -80,7 +80,8 @@ describe('SimpleAccount', function () {
             from: accountAddress,
             data: "0x",
             to: "0xA388C77224106eF77F67ED35d23CC5f3D6b1017b",
-            value: parseEther('0.000011')
+            value: parseEther('0'),
+            gasLimit: 21000,
         })
 
         const receipt = await ret.wait()

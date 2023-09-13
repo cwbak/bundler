@@ -155,6 +155,7 @@ export class UserOpMethodHandler {
     }
 
     async sendUserOperation(userOp1: UserOperationStruct, entryPointInput: string): Promise<string> {
+        console.log("::: UserOpMethodHandler sendUserOperation")
         await this._validateParameters(userOp1, entryPointInput)
 
         const userOp = await resolveProperties(userOp1)

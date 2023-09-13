@@ -4,6 +4,7 @@ coverage
 coverage.json
 typechain
 packages/bundler/src/typechain-types
+packages/xxx/typechain-types
 cache
 artifacts
 .DS_Store
