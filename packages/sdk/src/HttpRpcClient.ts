@@ -39,6 +39,8 @@ export class HttpRpcClient {
      * @return userOpHash the id of this operation, for getUserOperationTransaction
      */
     async sendUserOpToBundler(userOp1: UserOperationStruct): Promise<string> {
+        console.log("::: HttpRpcClient sendUserOpToBundler")
+
         await this.initializing
         const hexifiedUserOp = deepHexlify(await resolveProperties(userOp1))
         const jsonRequestData: [UserOperationStruct, string] = [hexifiedUserOp, this.entryPointAddress]

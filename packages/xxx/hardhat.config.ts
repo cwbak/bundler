@@ -20,12 +20,12 @@ const config: HardhatUserConfig = {
 
         sepolia_stackup: {
             url: 'https://api.stackup.sh/v1/node/02bd7702ac68e37d531b3f387cea0cc73ca3294981ce9b850ea69276ae6ebf46',
-            accounts: ['214d7aeb917409a215cd0590853925b5ced9bdf9d846fff6d26a650da550c013']
+            accounts: ['2e5ec44c69022f3142ed1be2f3b44f8178f36a45ecc9c4e1d374e27d8b3fdbf5']
         },
 
         sepolia_alchemy: {
             url: 'https://eth-sepolia.g.alchemy.com/v2/HScPYdzA0rnkjVlhirpV-0Bsh3SlUkvX',
-            accounts: ['214d7aeb917409a215cd0590853925b5ced9bdf9d846fff6d26a650da550c013']
+            accounts: ['2e5ec44c69022f3142ed1be2f3b44f8178f36a45ecc9c4e1d374e27d8b3fdbf5']
         }
     },
     mocha: {

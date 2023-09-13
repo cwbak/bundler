@@ -17,7 +17,7 @@ import { GetBalance } from "../src/balance";
 
 const ENTRY_POINT_ADDRESS = "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
 const BundlerURL = "http://127.0.0.1:3000/rpc" //https://eth-sepolia.g.alchemy.com/v2/HScPYdzA0rnkjVlhirpV-0Bsh3SlUkvX"
-const SmartWalletOwnerPK = "36af6a231fe89af6cdd6ba6afa6aebcbb173703ec35f30a9284dd1c001da3671"
+const SmartWalletOwnerPK = "8b04454a45bed4031edcea52aaa33b2b02365e728c2ed73694eda5d3a142ebb8"
 
 export async function wrapProvider(
     originalProvider: JsonRpcProvider,
