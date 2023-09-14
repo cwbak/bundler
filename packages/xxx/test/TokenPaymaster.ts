@@ -5,7 +5,7 @@ import {
     EntryPoint,
     EntryPoint__factory,
     SimpleAccountFactory__factory,
-    VerifyingPaymaster__factory
+    TokenPaymaster__factory, VerifyingPaymaster__factory
 } from "@account-abstraction/contracts";
 import {
     DeterministicDeployer,
@@ -13,10 +13,9 @@ import {
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from 'chai'
 import { ethers as hardhat_ethers } from "hardhat";
-import { ENTRY_POINT_ADDRESS, VerifyingSignerAddr } from "./__common__";
+import { ENTRY_POINT_ADDRESS } from "./__common__";
 
-const VerifyingPaymasterSalt = 0
-const DepositPaymasterSalt = 0
+const TokenPaymasterSalt = 0
 
 describe('Paymaster', function () {
     this.timeout(500000)
@@ -33,16 +32,12 @@ describe('Paymaster', function () {
         eoaSigner = (await hardhat_ethers.getSigners())[0]
     })
 
-    it('Deploy VerifyingPaymaster', async function () {
-        const verifyingPaymasterAddress = await detDeployer.deterministicDeploy(new VerifyingPaymaster__factory(), VerifyingPaymasterSalt, [entryPoint.address, VerifyingSignerAddr])
-        console.log("verifyingPaymaster address : %s", verifyingPaymasterAddress)
+    it('Deploy TokenPaymaster', async function () {
+        // const tokenPaymaster = await new TokenPaymaster__factory(eoaSigner).deploy(simpleAccountFactoryAddress, 'SampleT_T', entryPoint.address)
+        // console.log("tokenPaymaster address: %s", tokenPaymaster.address)
 
-        expect(true).to.be.true
-    })
-
-    it('Deploy DepositPaymaster', async function () {
-        const verifyingPaymasterAddress = await detDeployer.deterministicDeploy(new DepositPaymaster__factory(), DepositPaymasterSalt, [entryPoint.address])
-        console.log("DepositPaymaster address : %s", verifyingPaymasterAddress)
+        const tokenPaymasterAddress = await detDeployer.deterministicDeploy(new TokenPaymaster__factory(), TokenPaymasterSalt, [simpleAccountFactoryAddress, 'SampleT_T', entryPoint.address])
+        console.log("tokenPaymasterAddress address : %s", tokenPaymasterAddress)
 
         expect(true).to.be.true
     })

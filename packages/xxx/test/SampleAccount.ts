@@ -13,10 +13,8 @@ import { parseEther } from "ethers/lib/utils";
 import { ethers as hardhat_ethers } from "hardhat";
 import { BigNumberish, Signer, Wallet } from "ethers";
 import { GetBalance } from "../src/balance";
-import { ENTRY_POINT_ADDRESS, SmartWalletOwnerPK } from "./__common__";
+import { BUNDLER_URL, ENTRY_POINT_ADDRESS, SmartWalletOwnerPK } from "./__common__";
 
-
-const BundlerURL = "http://127.0.0.1:3000/rpc" //https://eth-sepolia.g.alchemy.com/v2/HScPYdzA0rnkjVlhirpV-0Bsh3SlUkvX"
 const SmartAccountIndex = 0
 
 export async function wrapProvider(
@@ -60,7 +58,7 @@ describe('SimpleAccount', function () {
 
     const config: ClientConfig = {
         entryPointAddress: ENTRY_POINT_ADDRESS,
-        bundlerUrl: BundlerURL,
+        bundlerUrl: BUNDLER_URL,
     }
 
     it('Send ETH', async function () {
