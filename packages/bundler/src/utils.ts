@@ -65,6 +65,7 @@ export async function supportsRpcMethod(provider: JsonRpcProvider, method: strin
 }
 
 export async function supportsDebugTraceCall(provider: JsonRpcProvider): Promise<boolean> {
+    console.log("::: supportsDebugTraceCall")
     const p = provider.send as any
     if (p._clientVersion == null) {
         p._clientVersion = await provider.send('web3_clientVersion', [])

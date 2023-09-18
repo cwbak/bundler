@@ -1,0 +1,14 @@
+{
+    "gasFactor": "1",
+    "port": "3000",
+    "network": "https://blissful-maximum-putty.ethereum-sepolia.quiknode.pro/c8f3412af2a0441740dd4ce52130406928519a5c/",
+    "entryPoint": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+    "beneficiary": "0x39541190BeC2E3255cb4fA86666fA7aF7644b7a4",
+    "minBalance": "0.01",
+    "mnemonic": "./localconfig/mnemonic_sepolia.txt",
+    "maxBundleGas": 5e6,
+    "minStake": "0.01" ,
+    "minUnstakeDelay": 0 ,
+    "autoBundleInterval": 3,
+    "autoBundleMempoolSize": 10
+}

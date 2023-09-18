@@ -1,4 +1,5 @@
 process.env.NETWORK = 'sepolia_alchemy'
+//process.env.NETWORK = 'localhost'
 
 import { EntryPoint__factory, SimpleAccountFactory__factory } from "@account-abstraction/contracts";
 import {
@@ -58,6 +59,17 @@ async function WrapProvider(
 
 describe('SimpleAccount', function () {
     this.timeout(500000)
+
+    it('Get address', async function () {
+        const eoaSigner = (await hardhat_ethers.getSigners())[0].address
+        const aaSigner = new Wallet(SmartWalletOwnerPK)
+        const aaProvider = await WrapProvider(hardhat_ethers.provider, Config, aaSigner, SmartAccountIndex)
+
+        const accountAddress = await aaProvider.getSigner().getAddress()
+        console.log("accountAddress: %s", accountAddress)
+
+        expect(true).to.be.true
+    })
 
     it('Send ETH', async function () {
         const eoaSigner = (await hardhat_ethers.getSigners())[0].address
