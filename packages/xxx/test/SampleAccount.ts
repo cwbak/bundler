@@ -13,9 +13,15 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { expect } from 'chai'
 import { parseEther } from "ethers/lib/utils";
 import { ethers as hardhat_ethers } from "hardhat";
-import { BigNumberish, Signer, Wallet } from "ethers";
+import { BigNumberish, ethers, Signer, Wallet } from "ethers";
 import { GetBalanceString } from "../src/utils";
-import { BUNDLER_URL, ENTRY_POINT_ADDRESS, SmartAccountIndex, SmartWalletOwnerPK } from "./__common__";
+import {
+    BUNDLER_URL,
+    ENTRY_POINT_ADDRESS,
+    printDepositInfo,
+    SmartAccountIndex,
+    SmartWalletOwnerPK
+} from "./__common__";
 
 const Config: ClientConfig = {
     entryPointAddress: ENTRY_POINT_ADDRESS,
@@ -66,7 +72,14 @@ describe('SimpleAccount', function () {
         const aaProvider = await WrapProvider(hardhat_ethers.provider, Config, aaSigner, SmartAccountIndex)
 
         const accountAddress = await aaProvider.getSigner().getAddress()
-        console.log("accountAddress: %s", accountAddress)
+        console.log("AccountAddress: %s", accountAddress)
+
+        const entryPoint = EntryPoint__factory.connect(Config.entryPointAddress, hardhat_ethers.provider)
+        const amount = await entryPoint.balanceOf(accountAddress)
+        console.log("Deposit Amount: %s", ethers.utils.formatEther(amount))
+
+        const info = await entryPoint.getDepositInfo(accountAddress)
+        printDepositInfo(info)
 
         expect(true).to.be.true
     })
@@ -88,7 +101,7 @@ describe('SimpleAccount', function () {
             from: accountAddress,
             data: "0x",
             to: "0xA388C77224106eF77F67ED35d23CC5f3D6b1017b",
-            value: parseEther('0.00001'),
+            //value: parseEther('0.00001'),
             gasLimit: 21000,
         })
 

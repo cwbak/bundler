@@ -22,7 +22,13 @@ import { parseEther } from "ethers/lib/utils";
 import { ethers as hardhat_ethers } from "hardhat";
 import { XXXSimpleAccountAPI } from "../src/XXXSimpleAccountAPI";
 import { IStakeManager } from "../typechain-types/@account-abstraction/contracts/interfaces/IEntryPoint";
-import { BUNDLER_URL, ENTRY_POINT_ADDRESS, SmartAccountIndex, SmartWalletOwnerPK } from "./__common__";
+import {
+    BUNDLER_URL,
+    ENTRY_POINT_ADDRESS,
+    printDepositInfo,
+    SmartAccountIndex,
+    SmartWalletOwnerPK
+} from "./__common__";
 
 const Config: ClientConfig = {
     entryPointAddress: ENTRY_POINT_ADDRESS,
@@ -73,16 +79,6 @@ async function WrapProvider(
         smartAccountAPI
     ).init()
 }
-
-function printDepositInfo(info: IStakeManager.DepositInfoStructOutput) {
-    console.log("Deposit info")
-    console.log("  amount: %s", info.deposit.toString())
-    console.log("  staked: %o", info.staked)
-    console.log("  stake:  %s", info.stake.toString())
-    console.log("  unstakeDelaySec: %d", info.unstakeDelaySec)
-    console.log("  withdrawTime:    %d", info.withdrawTime)
-}
-
 
 describe('Paymaster', function () {
     this.timeout(500000)
@@ -223,7 +219,7 @@ describe('Paymaster', function () {
             from: accountAddress,
             data: "0x",
             to: "0xA388C77224106eF77F67ED35d23CC5f3D6b1017b",
-            value: parseEther('0.0001231'),
+            //value: parseEther('0.007795751479708046'),
             gasLimit: 21000,
         })
         const receipt = await ret.wait()

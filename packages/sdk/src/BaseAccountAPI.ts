@@ -304,7 +304,10 @@ export abstract class BaseAccountAPI {
      * @param info transaction details for the userOp
      */
     async createSignedUserOp(info: TransactionDetailsForUserOp): Promise<UserOperationStruct> {
-        return await this.signUserOp(await this.createUnsignedUserOp(info))
+        console.log("::: createSignedUserOp")
+        const userOp = await this.createUnsignedUserOp(info)
+        console.log("userOp.initCode: %o", userOp.initCode)
+        return await this.signUserOp(userOp)
     }
 
     /**
