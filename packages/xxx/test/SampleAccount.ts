@@ -1,7 +1,11 @@
 process.env.NETWORK = 'sepolia_alchemy'
 //process.env.NETWORK = 'localhost'
 
-import { EntryPoint__factory, SimpleAccountFactory__factory } from "@account-abstraction/contracts";
+import {
+    EntryPoint__factory,
+    SimpleAccount__factory,
+    SimpleAccountFactory__factory
+} from "@account-abstraction/contracts";
 import {
     ClientConfig,
     DeterministicDeployer,
@@ -79,6 +83,31 @@ describe('SimpleAccount', function () {
         console.log("Deposit Amount: %s", ethers.utils.formatEther(amount))
 
         const info = await entryPoint.getDepositInfo(accountAddress)
+        printDepositInfo(info)
+
+        expect(true).to.be.true
+    })
+
+    it('Deposit', async function () {
+        const eoaSigner = (await hardhat_ethers.getSigners())[0]
+        const aaSigner = new Wallet(SmartWalletOwnerPK)
+        const aaProvider = await WrapProvider(hardhat_ethers.provider, Config, aaSigner, SmartAccountIndex)
+
+        console.log("signer:", eoaSigner.address)
+
+
+        const accountAddress = await aaProvider.getSigner().getAddress()
+        console.log("accountAddress: %s", accountAddress)
+
+        const entryPoint = EntryPoint__factory.connect(Config.entryPointAddress, eoaSigner)
+        let info = await entryPoint.getDepositInfo(accountAddress)
+        printDepositInfo(info)
+
+        const tx = await entryPoint.depositTo(accountAddress, {value: ethers.utils.parseEther("0.05")})
+        const receipt = await tx.wait(1)
+        console.log("Hash = %s", receipt.transactionHash)
+
+        info = await entryPoint.getDepositInfo(accountAddress)
         printDepositInfo(info)
 
         expect(true).to.be.true

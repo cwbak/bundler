@@ -20,8 +20,13 @@ type LogTracerFunc = () => LogTracer
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export async function debug_traceCall(provider: JsonRpcProvider, tx: Deferrable<TransactionRequest>, options: TraceOptions): Promise<TraceResult | any> {
     console.log("::: debug_traceCall")
+
     const tx1 = await resolveProperties(tx)
     const traceOptions = tracer2string(options)
+
+    //console.log("::: debug_traceCall :: tx1: %s", JSON.stringify(tx1))
+    //console.log("::: debug_traceCall :: traceOptions: %s", traceOptions)
+
     const ret = await provider.send('debug_traceCall', [tx1, 'latest', traceOptions]).catch(e => {
         debug('ex=', e.error)
         debug('tracer=', traceOptions.tracer?.toString().split('\n').map((line, index) => `${index + 1}: ${line}`).join('\n'))

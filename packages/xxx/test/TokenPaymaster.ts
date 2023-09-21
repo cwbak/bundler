@@ -200,7 +200,8 @@ describe('Paymaster', function () {
 
     it('Withdraw amount', async function () {
         const tokenPaymaster = await new TokenPaymaster__factory().attach(TokenPaymasterAddress).connect(eoaSigner)
-        const tx = await tokenPaymaster.withdrawTo("0xA388C77224106eF77F67ED35d23CC5f3D6b1017b", ethers.utils.parseEther("0.009"))
+        //const tx = await tokenPaymaster.withdrawTo("0xA388C77224106eF77F67ED35d23CC5f3D6b1017b", ethers.utils.parseEther("0.009"))
+        const tx = await tokenPaymaster.withdrawTo("0xA388C77224106eF77F67ED35d23CC5f3D6b1017b", "8750439459066228")
         const receipt = await tx.wait()
         console.log("TxHash: %s", receipt.transactionHash)
         expect(true).to.be.true
